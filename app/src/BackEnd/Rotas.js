@@ -71,6 +71,17 @@ app.get('/CarregarLivro/:id', (req, res) => {
     });
 });
 
+app.put('/AtualizarLivro/:id', (req, res) => {
+    const { id } = req.params;
+    const { imagem_url } = req.body;
+    const query = 'UPDATE livros SET imagem_url = ? WHERE id_livro = ?';
+    connection.query(query, [imagem_url, id], (error, results) => {
+        if (error) {
+            return res.status(500).json({ error: 'Erro ao atualizar livro' });
+        }
+        res.status(200).json({ message: 'Livro atualizado com sucesso!' });
+    });
+});
 
 
 const PORT = 3000;
