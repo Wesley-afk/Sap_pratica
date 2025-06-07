@@ -18,7 +18,7 @@ const Editar_livros = () => {
   const handleChange = (e) => {
     setLivro({ ...livro, [e.target.name]: e.target.value });
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(`http://localhost:3000/AtualizarLivro/${id}`, {
@@ -63,6 +63,44 @@ const Editar_livros = () => {
                   style={{ maxHeight: "350px" }}
                   className="mb-3"
                 />
+
+                <Form.Group className="mb-3" style={{ width: "100%" }}>
+                  <Form.Label>Autor</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="nome_autor"
+                    placeholder="Altere o nome aqui"
+                    value={livro.nome_autor}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" style={{ width: "100%" }}>
+                  <Form.Label>Gênero</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="genero"
+                    placeholder="Altere o genero aqui"
+                    value={livro.genero}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" style={{ width: "100%" }}>
+                  <Form.Label>Status</Form.Label>
+                  <Form.Select
+                    name="status"
+                    value={livro.status}
+                    onChange={handleChange}
+                  >
+
+                    <option value="Lido">Lido</option>
+                    <option value="Lendo">Lendo</option>
+                    <option value="Quero ler">Quero ler</option>
+                  </Form.Select>
+
+                </Form.Group>
+
                 <Button variant="primary" type="submit">
                   Salvar alterações
                 </Button>
