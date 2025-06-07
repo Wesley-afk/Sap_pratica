@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import connection from './db.js';
+import { useParams } from 'react-router';
 
 const app = express();
 app.use(cors());
@@ -16,7 +17,7 @@ app.post('/cadastro', (req, res) => {
 
     const query = 'INSERT INTO usuario (nome, email) VALUES(?, ?)';
     connection.query(query, [nome, email], (error, results) => {
-        if(error){
+        if (error) {
             console.log("Erro ao cadastrar usuário:", error);
             return res.status(500).json({ error: 'Erro ao cadastrar usuário' });
         }
@@ -31,15 +32,15 @@ app.post('/cadastro', (req, res) => {
 
 // Rotas para a página de cadastro de livros
 app.post('/cadastroDeLivros', (req, res) => {
-    const {titulo, nome_autor, genero, imagem} = req.body;
+    const { titulo, nome_autor, genero, imagem } = req.body;
 
     const query = 'INSERT INTO livros (titulo_livro, nome_autor, genero, imagem_url) VALUES(?, ?, ?, ?)';
     connection.query(query, [titulo, nome_autor, genero, imagem], (error, results) => {
-        if(error){
-             console.log("Erro ao cadastrar livro:", error);
+        if (error) {
+            console.log("Erro ao cadastrar livro:", error);
             return res.status(500).json({ error: 'Erro ao cadastrar livro' });
         }
-         res.status(201).json({ message: 'Livro cadastrado com sucesso!' });
+        res.status(201).json({ message: 'Livro cadastrado com sucesso!' });
     })
 })
 
@@ -85,6 +86,18 @@ app.put('/AtualizarLivro/:id', (req, res) => {
             res.status(200).json({ message: 'Livro atualizado com sucesso!' });
         }
     );
+});
+
+app.delete('/DeletarLivro/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'DELETE FROM livros WHERE id_livro = ?';
+    connection.query(query, [id], (error, results) => {
+        if (error) {
+            console.log("Erro ao deletar livro:", error);
+            return res.status(500).json({ error: 'Erro ao deletar livro' });
+        }
+        res.status(200).json({ message: 'Livro deletado com sucesso!' });
+    });
 });
 
 

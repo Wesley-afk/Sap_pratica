@@ -36,6 +36,20 @@ const Editar_livros = () => {
       .catch((err) => alert("Erro ao atualizar livro!"));
   };
 
+  const handleDelete = () => {
+    if (window.confirm("Tem certeza que deseja deletar este livro?")) {
+      fetch(`http://localhost:3000/DeletarLivro/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          alert("Livro deletado com sucesso!");
+          navigate("/livros");
+        })
+        .catch((err) => alert("Erro ao deletar livro!"));
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -98,7 +112,15 @@ const Editar_livros = () => {
                     <option value="Lendo">Lendo</option>
                     <option value="Quero ler">Quero ler</option>
                   </Form.Select>
+                </Form.Group>
 
+                <Form.Group>
+                  <Form.Label>
+                    Deletar livro
+                  </Form.Label>
+                  <Button variant="danger" onClick={handleDelete} style={{ display: "block" }}>
+                      Excluir
+                  </Button>
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
